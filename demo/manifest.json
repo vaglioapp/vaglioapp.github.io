@@ -1,0 +1,35 @@
+{
+    "name": "Vaglio – demo",
+    "short_name": "Vaglio",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#0D0B14",
+    "theme_color": "#7C5CFF",
+    "description": "Fai valutare le tue pubblicità da persone vere prima di investirci.",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}

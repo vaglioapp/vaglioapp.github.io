@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vaglio – Scopri se la tua pubblicità funziona</title>
+  <meta name="description" content="Persone vere del tuo pubblico guardano la tua pubblicità e ti dicono a che secondo perdono interesse, se capiscono il messaggio e cosa cambiare. Report in 48 ore. Primo test a 29 €.">
+  <meta property="og:title" content="Vaglio – Scopri se la tua pubblicità funziona prima di spenderci">
+  <meta property="og:description" content="Persone vere del tuo target valutano la tua pubblicità. Report in 48 ore, primo test a 29 €.">
+  <meta property="og:image" content="https://vaglioapp.github.io/icons/Icon-512.png">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0D0B14">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0D0B14; --surface: #16131F; --surface-high: #1F1A2C; --border: #2C2640;
+      --text: #F4F1FA; --muted: #A39DB5;
+      --violet: #7C5CFF; --orchid: #C26BFF; --pink: #FF7AB6; --amber: #FFC23D; --mint: #34D3A2; --coral: #FF6B7A;
+      --brand: linear-gradient(135deg, var(--violet), var(--orchid));
+      --money: linear-gradient(135deg, #6A4BFF, #B05CFF, #FF7AB6);
+      color-scheme: dark;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    }
+    a { color: inherit; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+    /* Aloni di colore sullo sfondo, come nell'app */
+    .glow { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; filter: blur(10px); }
+    .glow.a { width: 520px; height: 520px; top: -200px; left: -180px; background: radial-gradient(closest-side, rgba(124,92,255,.42), transparent); animation: drift 18s ease-in-out infinite; }
+    .glow.b { width: 560px; height: 560px; bottom: -260px; right: -200px; background: radial-gradient(closest-side, rgba(255,122,182,.24), transparent); animation: drift 22s ease-in-out infinite reverse; }
+    @keyframes drift { 50% { transform: translate(50px, 40px); } }
+    main, header, footer { position: relative; z-index: 1; }
+
+    header .wrap { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 20px; letter-spacing: -.3px; text-decoration: none; }
+    .logo img { width: 34px; height: 34px; border-radius: 9px; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      height: 52px; padding: 0 24px; border-radius: 16px; border: 0; cursor: pointer;
+      font: 700 15px/1 'Plus Jakarta Sans', sans-serif; text-decoration: none; white-space: nowrap;
+      transition: transform .15s ease, box-shadow .2s ease;
+    }
+    .btn:active { transform: scale(.96); }
+    .btn.primary { background: var(--brand); color: #fff; box-shadow: 0 12px 28px -10px rgba(124,92,255,.7); position: relative; overflow: hidden; }
+    .btn.primary::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.35) 50%, transparent 70%);
+      transform: translateX(-120%); animation: shine 3.4s ease-in-out infinite;
+    }
+    @keyframes shine { 0%, 60% { transform: translateX(-120%); } 85%, 100% { transform: translateX(120%); } }
+    .btn.ghost { background: var(--surface-high); color: var(--text); border: 1px solid var(--border); }
+    .btn.small { height: 42px; padding: 0 16px; font-size: 14px; border-radius: 12px; }
+
+    /* Apertura */
+    .hero { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; padding-top: 48px; padding-bottom: 72px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 40px;
+      background: rgba(255,194,61,.12); border: 1px solid rgba(255,194,61,.35); color: var(--amber);
+      font-size: 13px; font-weight: 700;
+    }
+    h1 { font-size: clamp(36px, 5.4vw, 60px); line-height: 1.05; letter-spacing: -2px; margin: 18px 0 18px; font-weight: 800; }
+    .grad { background: var(--money); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .lead { font-size: 18px; color: var(--muted); max-width: 540px; margin: 0 0 28px; }
+    .ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+    .note { margin-top: 14px; font-size: 13px; color: var(--muted); }
+
+    /* Esempio di report, inclinato in 3D */
+    .stage { perspective: 1200px; }
+    .report {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 26px; padding: 22px;
+      box-shadow: 0 40px 80px -30px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.02) inset;
+      transform: rotateY(-14deg) rotateX(8deg); transform-style: preserve-3d;
+      transition: transform .25s ease-out; position: relative;
+    }
+    .report::before {
+      content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+      background: radial-gradient(circle at var(--gx, 30%) var(--gy, 20%), rgba(255,255,255,.10), transparent 55%);
+    }
+    .r-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .r-title { font-weight: 800; font-size: 16px; }
+    .r-sub { font-size: 12.5px; color: var(--muted); }
+    .tag { font-size: 11.5px; font-weight: 700; padding: 4px 9px; border-radius: 30px; background: rgba(52,211,162,.14); color: var(--mint); border: 1px solid rgba(52,211,162,.35); white-space: nowrap; }
+    .chart { background: var(--surface-high); border-radius: 16px; padding: 14px 14px 8px; margin-bottom: 14px; }
+    .chart-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+    .chart svg { width: 100%; height: 120px; display: block; }
+    .chart .line { stroke-dasharray: 600; stroke-dashoffset: 600; animation: draw 2.2s .4s ease-out forwards; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+    .metric { background: var(--surface-high); border-radius: 14px; padding: 12px; }
+    .metric b { display: block; font-size: 22px; letter-spacing: -.5px; }
+    .metric span { font-size: 11.5px; color: var(--muted); line-height: 1.3; display: block; }
+    .quote { background: rgba(124,92,255,.10); border: 1px solid rgba(124,92,255,.3); border-radius: 14px; padding: 12px 14px; font-size: 13.5px; }
+    .quote small { display: block; color: var(--muted); margin-top: 4px; font-size: 12px; }
+    .example { text-align: center; font-size: 12px; color: var(--muted); margin-top: 12px; }
+
+    section { padding: 72px 0; }
+    .eyebrow { color: var(--orchid); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 1.4px; }
+    h2 { font-size: clamp(28px, 3.6vw, 40px); letter-spacing: -1.2px; line-height: 1.1; margin: 10px 0 14px; font-weight: 800; }
+    .section-lead { color: var(--muted); font-size: 17px; max-width: 620px; margin: 0 0 36px; }
+
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 22px; padding: 24px; transition: transform .2s ease, border-color .2s ease; }
+    .card:hover { transform: translateY(-4px); border-color: #3d3557; }
+    .icon { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; font-size: 22px; margin-bottom: 16px; }
+    .card h3 { margin: 0 0 6px; font-size: 18px; letter-spacing: -.3px; }
+    .card p { margin: 0; color: var(--muted); font-size: 15px; }
+    .step-num { font-size: 13px; font-weight: 800; color: var(--muted); margin-bottom: 4px; }
+
+    /* Prezzi */
+    .prices { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .price { background: var(--surface); border: 1px solid var(--border); border-radius: 22px; padding: 22px; display: flex; flex-direction: column; }
+    .price.hot { background: var(--money); border-color: transparent; box-shadow: 0 24px 50px -20px rgba(176,92,255,.7); position: relative; }
+    .price .name { font-weight: 700; font-size: 15px; }
+    .price .amount { font-size: 38px; font-weight: 800; letter-spacing: -1.4px; margin: 8px 0 2px; }
+    .price .per { font-size: 14px; color: var(--muted); }
+    .price.hot .per, .price.hot .name, .price.hot li { color: rgba(255,255,255,.9); }
+    .price ul { list-style: none; padding: 0; margin: 16px 0 20px; font-size: 14px; color: var(--muted); }
+    .price li { padding: 3px 0; }
+    .price li::before { content: '✓ '; color: var(--mint); font-weight: 800; }
+    .price.hot li::before { color: #fff; }
+    .price .btn { margin-top: auto; width: 100%; }
+    .price.hot .btn { background: #fff; color: var(--violet); }
+    .ribbon { position: absolute; top: -12px; left: 22px; background: var(--amber); color: #2B1D00; font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 30px; }
+    .old { text-decoration: line-through; color: rgba(255,255,255,.65); font-size: 18px; font-weight: 700; margin-left: 6px; }
+
+    /* Domande */
+    .faq { max-width: 760px; }
+    details { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 18px 20px; margin-bottom: 10px; }
+    summary { cursor: pointer; font-weight: 700; font-size: 16px; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: '+'; color: var(--muted); font-size: 22px; line-height: 1; transition: transform .2s; }
+    details[open] summary::after { transform: rotate(45deg); }
+    details p { color: var(--muted); margin: 10px 0 0; }
+
+    .final { text-align: center; background: var(--surface); border: 1px solid var(--border); border-radius: 30px; padding: 56px 24px; position: relative; overflow: hidden; }
+    .final::before { content: ''; position: absolute; inset: -40% -10% auto; height: 300px; background: radial-gradient(closest-side, rgba(124,92,255,.35), transparent); pointer-events: none; }
+    .final > * { position: relative; }
+    .final .ctas { justify-content: center; }
+
+    footer { padding: 36px 0 48px; color: var(--muted); font-size: 13.5px; }
+    footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1); }
+    .reveal.in { opacity: 1; transform: none; }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; gap: 40px; padding-top: 24px; }
+      .report { transform: rotateX(6deg); }
+      .cards { grid-template-columns: 1fr; }
+      .prices { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+      .wrap { padding: 0 16px; }
+      .prices { grid-template-columns: 1fr; }
+      .ctas .btn { flex: 1 1 100%; }
+      header .btn.small { display: none; }
+      .lead { font-size: 16.5px; }
+      .metric b { font-size: 19px; }
+      section { padding: 56px 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .chart .line { stroke-dashoffset: 0; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow a"></div>
+  <div class="glow b"></div>
+
+  <header>
+    <div class="wrap">
+      <a class="logo" href="#"><img src="icons/Icon-192.png" alt="">Vaglio</a>
+      <a class="btn ghost small" href="demo/">Prova la demo</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap hero">
+      <div>
+        <span class="chip">★ Primo test a 29 € invece di 79 €</span>
+        <h1>Scopri se la tua pubblicità <span class="grad">funziona</span> prima di spenderci.</h1>
+        <p class="lead">Persone vere del tuo pubblico la guardano e ti dicono a che secondo perdono interesse, se capiscono il messaggio, se ricordano il marchio e cosa cambiare. Il report arriva in 48 ore.</p>
+        <div class="ctas">
+          <a class="btn primary" href="mailto:alex11poly05@gmail.com?subject=Primo%20test%20Vaglio%20a%2029%20%E2%82%AC">Voglio il primo test</a>
+          <a class="btn ghost" href="demo/">Prova la demo ▸</a>
+        </div>
+        <p class="note">Video, immagine o link a YouTube, Instagram e TikTok. Nessun abbonamento.</p>
+      </div>
+
+      <div class="stage">
+        <div class="report" id="report">
+          <div class="r-head">
+            <div>
+              <div class="r-title">Spot crema viso – versione A</div>
+              <div class="r-sub">30 donne, 25–44 anni, interesse cosmetici</div>
+            </div>
+            <span class="tag">Report pronto</span>
+          </div>
+          <div class="chart">
+            <div class="chart-label"><span>Attenzione nel tempo</span><span>calo al 9° secondo</span></div>
+            <svg viewBox="0 0 300 120" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="lg" x1="0" x2="1"><stop offset="0" stop-color="#7C5CFF"/><stop offset="1" stop-color="#FF7AB6"/></linearGradient>
+                <linearGradient id="fill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="rgba(124,92,255,.35)"/><stop offset="1" stop-color="rgba(124,92,255,0)"/></linearGradient>
+              </defs>
+              <path d="M0,12 C40,14 70,18 100,26 C118,31 122,62 140,70 C170,82 210,84 240,90 C265,95 285,98 300,100 L300,120 L0,120 Z" fill="url(#fill)"/>
+              <path class="line" d="M0,12 C40,14 70,18 100,26 C118,31 122,62 140,70 C170,82 210,84 240,90 C265,95 285,98 300,100" fill="none" stroke="url(#lg)" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="122" cy="48" r="5" fill="#FFC23D"/>
+            </svg>
+          </div>
+          <div class="metrics">
+            <div class="metric"><b>72%</b><span>ha capito il messaggio</span></div>
+            <div class="metric"><b>58%</b><span>ricorda il marchio</span></div>
+            <div class="metric"><b>3,8/5</b><span>la comprerebbe</span></div>
+          </div>
+          <div class="quote">“Il prodotto si vede solo alla fine: metterei la crema nei primi 3 secondi.”<small>Recensione segnata come utile · donna, 31 anni, Milano</small></div>
+        </div>
+        <p class="example">Esempio di report con dati dimostrativi</p>
+      </div>
+    </div>
+
+    <section>
+      <div class="wrap">
+        <div class="eyebrow reveal">Come funziona</div>
+        <h2 class="reveal">Tre passi, zero complicazioni.</h2>
+        <p class="section-lead reveal">Tu carichi la pubblicità, noi la mostriamo alle persone giuste e ti diamo risposte chiare.</p>
+        <div class="cards">
+          <div class="card reveal">
+            <div class="icon" style="background:rgba(124,92,255,.16)">⬆️</div>
+            <div class="step-num">1</div>
+            <h3>Carica la pubblicità</h3>
+            <p>Un video, un'immagine o il link al post. Scegli età, genere, città e interessi del tuo pubblico.</p>
+          </div>
+          <div class="card reveal">
+            <div class="icon" style="background:rgba(255,194,61,.16)">👀</div>
+            <div class="step-num">2</div>
+            <h3>Persone vere la guardano</h3>
+            <p>La vedono solo i tester con il profilo giusto, fino alla fine. Segnano quando si annoiano e rispondono a domande precise.</p>
+          </div>
+          <div class="card reveal">
+            <div class="icon" style="background:rgba(52,211,162,.16)">📊</div>
+            <div class="step-num">3</div>
+            <h3>Ricevi il report</h3>
+            <p>In 48 ore: curva dell'attenzione, messaggio capito, marchio ricordato, intenzione d'acquisto e cosa cambiare. Anche in PDF.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="eyebrow reveal">Perché fidarsi</div>
+        <h2 class="reveal">Pareri sinceri, non like di cortesia.</h2>
+        <p class="section-lead reveal">Il sistema premia chi aiuta davvero, non chi fa i complimenti.</p>
+        <div class="cards">
+          <div class="card reveal">
+            <div class="icon" style="background:rgba(255,122,182,.16)">🎯</div>
+            <h3>Il tuo pubblico, non uno qualsiasi</h3>
+            <p>Ogni pubblicità arriva solo a chi corrisponde al target che scegli.</p>
+          </div>
+          <div class="card reveal">
+            <div class="icon" style="background:rgba(124,92,255,.16)">🛡️</div>
+            <h3>Recensioni controllate</h3>
+            <p>Un filtro automatico scarta le risposte frettolose o generiche prima che tu le veda.</p>
+          </div>
+          <div class="card reveal">
+            <div class="icon" style="background:rgba(255,194,61,.16)">⚡</div>
+            <h3>Premi l'utilità</h3>
+            <p>Segni le recensioni che ti sono servite: chi le ha scritte riceve un bonus, già incluso nel prezzo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="prezzi">
+      <div class="wrap">
+        <div class="eyebrow reveal">Prezzi</div>
+        <h2 class="reveal">Paghi solo le recensioni che ti servono.</h2>
+        <p class="section-lead reveal">Un pacchetto per ogni pubblicità. Nessun abbonamento, nessun costo nascosto.</p>
+        <div class="prices">
+          <div class="price hot reveal">
+            <span class="ribbon">Solo il primo test</span>
+            <div class="name">Prova</div>
+            <div class="amount">29 €<span class="old">79 €</span></div>
+            <div class="per">30 recensioni</div>
+            <ul><li>Report completo in 48 ore</li><li>Curva dell'attenzione</li><li>Report in PDF</li></ul>
+            <a class="btn" href="mailto:alex11poly05@gmail.com?subject=Primo%20test%20Vaglio%20a%2029%20%E2%82%AC">Inizia da qui</a>
+          </div>
+          <div class="price reveal">
+            <div class="name">Base</div>
+            <div class="amount">49 €</div>
+            <div class="per">50 recensioni</div>
+            <ul><li>Report completo in 48 ore</li><li>Curva dell'attenzione</li><li>Report in PDF</li></ul>
+            <a class="btn ghost" href="mailto:alex11poly05@gmail.com?subject=Pacchetto%20Vaglio%2050%20recensioni">Scegli</a>
+          </div>
+          <div class="price reveal">
+            <div class="name">Standard</div>
+            <div class="amount">79 €</div>
+            <div class="per">100 recensioni</div>
+            <ul><li>Tutto di Base</li><li>Risultati più affidabili</li><li>Ideale per confrontare versioni</li></ul>
+            <a class="btn ghost" href="mailto:alex11poly05@gmail.com?subject=Pacchetto%20Vaglio%20100%20recensioni">Scegli</a>
+          </div>
+          <div class="price reveal">
+            <div class="name">Pro</div>
+            <div class="amount">199 €</div>
+            <div class="per">300 recensioni</div>
+            <ul><li>Tutto di Standard</li><li>Il campione più ampio</li><li>Per le campagne importanti</li></ul>
+            <a class="btn ghost" href="mailto:alex11poly05@gmail.com?subject=Pacchetto%20Vaglio%20300%20recensioni">Scegli</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap faq">
+        <div class="eyebrow reveal">Domande</div>
+        <h2 class="reveal">Domande frequenti</h2>
+        <details class="reveal"><summary>Chi sono i tester?</summary><p>Persone comuni che si iscrivono all'app e indicano età, genere, città e interessi. Vedono solo le pubblicità per cui corrispondono al target.</p></details>
+        <details class="reveal"><summary>Che pubblicità posso testare?</summary><p>Video e immagini caricati da te, oppure il link a un post o a un video già online (YouTube, Instagram, TikTok e simili). Puoi testarla prima di pubblicarla o mentre è già attiva.</p></details>
+        <details class="reveal"><summary>In quanto tempo ho i risultati?</summary><p>Di solito entro 48 ore. Puoi seguire le recensioni man mano che arrivano.</p></details>
+        <details class="reveal"><summary>Perché il primo test costa solo 29 €?</summary><p>Stiamo partendo con le prime aziende: in cambio dello sconto ti chiediamo un parere sincero sul servizio.</p></details>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="final reveal">
+          <h2>Prima di investire, chiedilo al tuo pubblico.</h2>
+          <p class="section-lead" style="margin: 0 auto 28px">Scrivici quale pubblicità vuoi testare: ti rispondiamo entro un giorno.</p>
+          <div class="ctas">
+            <a class="btn primary" href="mailto:alex11poly05@gmail.com?subject=Primo%20test%20Vaglio%20a%2029%20%E2%82%AC">Voglio il primo test a 29 €</a>
+            <a class="btn ghost" href="demo/">Prova la demo</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© 2026 Vaglio · test delle pubblicità con persone vere</span>
+      <a href="mailto:alex11poly05@gmail.com">alex11poly05@gmail.com</a>
+    </div>
+  </footer>
+
+  <script>
+    // Le sezioni compaiono mentre si scorre.
+    const io = 'IntersectionObserver' in window
+      ? new IntersectionObserver((entries) => entries.forEach((e) => {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        }), { threshold: 0.12 })
+      : null;
+    document.querySelectorAll('.reveal').forEach((el) => io ? io.observe(el) : el.classList.add('in'));
+
+    // Il report si inclina verso il mouse, con il riflesso che lo segue.
+    const report = document.getElementById('report');
+    const fine = window.matchMedia('(hover: hover) and (min-width: 901px)').matches;
+    const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (fine && !still) {
+      report.parentElement.addEventListener('mousemove', (e) => {
+        const r = report.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        report.style.transform = `rotateY(${x * 18}deg) rotateX(${-y * 14}deg)`;
+        report.style.setProperty('--gx', `${(x + 0.5) * 100}%`);
+        report.style.setProperty('--gy', `${(y + 0.5) * 100}%`);
+      });
+      report.parentElement.addEventListener('mouseleave', () => { report.style.transform = ''; });
+    }
+  </script>
+</body>
+</html>
