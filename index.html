@@ -61,6 +61,7 @@
     @keyframes shine { 0%, 60% { transform: translateX(-120%); } 85%, 100% { transform: translateX(120%); } }
     .btn.ghost { background: var(--surface-high); color: var(--text); border: 1px solid var(--border); }
     .btn.small { height: 42px; padding: 0 16px; font-size: 14px; border-radius: 12px; }
+    .top-links { display: flex; gap: 8px; }
 
     /* Apertura */
     .hero { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; padding-top: 48px; padding-bottom: 72px; }
@@ -164,7 +165,7 @@
       .wrap { padding: 0 16px; }
       .prices { grid-template-columns: 1fr; }
       .ctas .btn { flex: 1 1 100%; }
-      header .btn.small { display: none; }
+      header .btn.ghost.small { display: none; }
       .lead { font-size: 16.5px; }
       .metric b { font-size: 19px; }
       section { padding: 56px 0; }
@@ -183,7 +184,7 @@
   <header>
     <div class="wrap">
       <a class="logo" href="#"><img src="icons/Icon-192.png" alt="">Vaglio</a>
-      <a class="btn ghost small" href="demo/">Prova la demo</a>
+      <nav class="top-links"><a class="btn ghost small" href="demo/">Prova la demo</a><a class="btn primary small" href="app/">Accedi</a></nav>
     </div>
   </header>
 
@@ -352,7 +353,7 @@
   <footer>
     <div class="wrap">
       <span>© 2026 Vaglio · test delle pubblicità con persone vere</span>
-      <a href="mailto:alex11poly05@gmail.com">alex11poly05@gmail.com</a>
+      <span><a href="app/">Accedi o registrati</a> · <a href="privacy.html">Privacy</a> · <a href="termini.html">Termini d'uso</a> · <a href="mailto:alex11poly05@gmail.com">alex11poly05@gmail.com</a></span>
     </div>
   </footer>
 
